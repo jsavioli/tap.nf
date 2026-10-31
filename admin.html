@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tap NF | Painel de Controle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0a10;
+      --card-bg: #14121f;
+      --card-border: #232035;
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --primary-soft: rgba(139, 92, 246, 0.15);
+      --accent: #a855f7;
+      --text: #f9fafb;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --radius: 14px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #7c3aed, #4c1d95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+    }
+    .brand-icon svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2.2; }
+    .brand-text h1 { font-size: 1.35rem; font-weight: 700; }
+    .brand-text p { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Layout em 2 Colunas */
+    .grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* Cards e Formulários */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+    input, select {
+      background: #0f0d18;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-soft);
+    }
+
+    button.btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #fff;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+      transition: all 0.2s;
+    }
+    button.btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
+
+    /* Barra de busca e filtros */
+    .filter-bar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 600px) {
+      .filter-bar { grid-template-columns: 1fr; }
+    }
+
+    /* Tabela de Tags */
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 14px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-google { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .badge-insta { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+    .badge-whats { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+
+    .btn-action {
+      background: #1a1727;
+      border: 1px solid var(--card-border);
+      color: #c4b5fd;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+    }
+    .btn-action:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+
+    /* Notificações */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1a172a;
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      font-size: 0.9rem;
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 4a16 16 0 0 1 16 16" stroke-dasharray="2 3"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1>Tap NF</h1>
+          <p>Painel de Controle NFC • Nova Friburgo - RJ</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Coluna Formulário -->
+      <div class="card">
+        <h2 class="card-title">Nova Tag NFC</h2>
+        <form id="tagForm">
+          <div class="form-group">
+            <label>Nome do Estabelecimento / Cliente</label>
+            <input type="text" id="cliente" placeholder="Ex: Padaria Poppe" required>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Pilar</label>
+            <select id="tipo" required onchange="adjustDestinationHelper()">
+              <option value="Google Avaliações">Google Avaliações (5 Estrelas)</option>
+              <option value="Instagram">Instagram</option>
+              <option value="WhatsApp">WhatsApp</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="destLabel">Link de Avaliação Google Maps</label>
+            <input type="text" id="destino" placeholder="https://g.page/r/..." required>
+          </div>
+
+          <div class="form-group">
+            <label>ID da URL (NFC Slug)</label>
+            <input type="text" id="idTag" placeholder="ex: poppe-google" required>
+            <small style="color: var(--text-muted); font-size: 0.72rem; margin-top: 3px;">
+              Link gravado na tag: <b>tapnf.com.br/?id=<span id="previewSlug">slug</span></b>
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Bairro (Nova Friburgo)</label>
+            <input list="bairrosList" id="bairro" placeholder="Selecione ou digite o bairro">
+            <datalist id="bairrosList">
+              <option value="Centro">
+              <option value="Olaria">
+              <option value="Cônego">
+              <option value="Braunes">
+              <option value="Cascata">
+              <option value="Conselheiro Paulino">
+              <option value="Duas Pedras">
+              <option value="Ponte da Saudade">
+              <option value="Mury">
+              <option value="Amparo">
+              <option value="Lumiar">
+              <option value="São Pedro da Serra">
+            </datalist>
+          </div>
+
+          <div class="form-group">
+            <label>Contato do Responsável (WhatsApp)</label>
+            <input type="text" id="contato" placeholder="22999998888">
+          </div>
+
+          <button type="submit" class="btn-primary" id="btnSubmit">Cadastrar Tag</button>
+        </form>
+      </div>
+
+      <!-- Coluna Lista de Tags -->
+      <div class="card">
+        <h2 class="card-title">Tags Ativas</h2>
+        
+        <!-- Filtros -->
+        <div class="filter-bar">
+          <input type="text" id="searchInput" placeholder="Buscar por cliente ou ID..." oninput="filterTags()">
+          <select id="filterTipo" onchange="filterTags()">
+            <option value="">Todos os Tipos</option>
+            <option value="Google">Google</option>
+            <option value="Instagram">Instagram</option>
+            <option value="WhatsApp">WhatsApp</option>
+          </select>
+          <select id="filterBairro" onchange="filterTags()">
+            <option value="">Todos os Bairros</option>
+          </select>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente / ID</th>
+                <th>Pilar</th>
+                <th>Bairro</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tagsBody">
+              <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Carregando tags...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    // ⚠️ SUBSTITUA COM SUA URL DO APPS SCRIPT:
+    const API_URL = "https://script.google.com/macros/s/SEU_SCRIPT_ID_AQUI/exec";
+    
+    // Substitua pelo domínio onde seu index.html está hospedado (ex: https://tapnf.com.br/)
+    const BASE_URL = window.location.origin + window.location.pathname.replace('admin.html', '');
+
+    let cachedTags = [];
+
+    // Carrega dados iniciais
+    window.addEventListener('DOMContentLoaded', fetchTags);
+
+    async function fetchTags() {
+      try {
+        const res = await fetch(`${API_URL}?action=getAll`);
+        const data = await res.json();
+        if (data.success) {
+          cachedTags = data.tags || [];
+          populateBairrosFilter(cachedTags);
+          renderTable(cachedTags);
+        }
+      } catch (err) {
+        showToast("Erro ao carregar dados da planilha.");
+      }
+    }
+
+    function renderTable(tags) {
+      const tbody = document.getElementById('tagsBody');
+      tbody.innerHTML = '';
+
+      if (!tags.length) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Nenhuma tag encontrada.</td></tr>`;
+        return;
+      }
+
+      tags.forEach(t => {
+        const tr = document.createElement('tr');
+        
+        let badgeClass = 'badge-google';
+        if (t.tipo.includes('Instagram')) badgeClass = 'badge-insta';
+        if (t.tipo.includes('WhatsApp')) badgeClass = 'badge-whats';
+
+        const finalNfcLink = `${BASE_URL}?id=${encodeURIComponent(t.id)}`;
+
+        tr.innerHTML = `
+          <td>
+            <strong>${t.cliente || 'Sem nome'}</strong><br>
+            <code style="color: var(--primary); font-size: 0.75rem;">${t.id}</code>
+          </td>
+          <td><span class="badge ${badgeClass}">${t.tipo}</span></td>
+          <td><small style="color: var(--text-muted);">${t.bairro || 'N/A'}</small></td>
+          <td>
+            <button class="btn-action" onclick="copyNfcLink('${finalNfcLink}')">Copiar Link NFC</button>
+            <a class="btn-action" href="${finalNfcLink}" target="_blank">Testar</a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Auto-preenchimento do Slug com base no cliente e pilar selecionado
+    const clienteInput = document.getElementById('cliente');
+    const tipoSelect = document.getElementById('tipo');
+    const idTagInput = document.getElementById('idTag');
+    const previewSlug = document.getElementById('previewSlug');
+
+    function updateSlug() {
+      const clientSlug = clienteInput.value.toLowerCase().replace(/[^a-z0-9]/g, '');
+      let suffix = 'g';
+      if (tipoSelect.value.includes('Instagram')) suffix = 'insta';
+      if (tipoSelect.value.includes('WhatsApp')) suffix = 'zap';
+      if (clientSlug) {
+        idTagInput.value = `${clientSlug}-${suffix}`;
+        previewSlug.textContent = idTagInput.value;
+      }
+    }
+    clienteInput.addEventListener('input', updateSlug);
+    idTagInput.addEventListener('input', () => { previewSlug.textContent = idTagInput.value; });
+
+    // Ajusta o placeholder conforme o pilar selecionado
+    function adjustDestinationHelper() {
+      const tipo = tipoSelect.value;
+      const label = document.getElementById('destLabel');
+      const input = document.getElementById('destino');
+      
+      if (tipo === 'Google Avaliações') {
+        label.textContent = "Link de Avaliação Google (ex: link curto 5 estrelas)";
+        input.placeholder = "https://g.page/r/...";
+      } else if (tipo === 'Instagram') {
+        label.textContent = "Nome de usuário do Instagram (@)";
+        input.placeholder = "@padariapoppe ou link do perfil";
+      } else {
+        label.textContent = "Número do WhatsApp com DDD";
+        input.placeholder = "22999998888";
+      }
+      updateSlug();
+    }
+
+    // Submissão do Formulário para o Apps Script
+    document.getElementById('tagForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.textContent = "Salvando na planilha...";
+
+      const payload = {
+        id: idTagInput.value,
+        cliente: clienteInput.value,
+        tipo: tipoSelect.value,
+        destino: document.getElementById('destino').value,
+        bairro: document.getElementById('bairro').value,
+        contato: document.getElementById('contato').value
+      };
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        
+        if (result.success) {
+          showToast("Tag cadastrada com sucesso!");
+          document.getElementById('tagForm').reset();
+          fetchTags();
+        } else {
+          showToast(result.message || "Erro ao salvar.");
+        }
+      } catch (err) {
+        showToast("Erro ao comunicar com a planilha.");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Cadastrar Tag";
+      }
+    });
+
+    // Filtros e Busca em Tempo Real
+    function filterTags() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const tipo = document.getElementById('filterTipo').value;
+      const bairro = document.getElementById('filterBairro').value;
+
+      const filtered = cachedTags.filter(t => {
+        const matchesSearch = (t.cliente || '').toLowerCase().includes(search) || (t.id || '').toLowerCase().includes(search);
+        const matchesTipo = !tipo || (t.tipo || '').includes(tipo);
+        const matchesBairro = !bairro || (t.bairro || '') === bairro;
+        return matchesSearch && matchesTipo && matchesBairro;
+      });
+
+      renderTable(filtered);
+    }
+
+    function populateBairrosFilter(tags) {
+      const select = document.getElementById('filterBairro');
+      const bairros = [...new Set(tags.map(t => t.bairro).filter(Boolean))];
+      select.innerHTML = '<option value="">Todos os Bairros</option>';
+      bairros.forEach(b => {
+        select.innerHTML += `<option value="${b}">${b}</option>`;
+      });
+    }
+
+    function copyNfcLink(url) {
+      navigator.clipboard.writeText(url);
+      showToast("Link copiado para a área de transferência!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+  </script>
+</body>
+</html>
