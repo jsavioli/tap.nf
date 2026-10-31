@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tap NF | Painel Administrativo</title>
+  <title>Tap NF | Painel de Controle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -14,7 +14,6 @@
       --primary: #8b5cf6;
       --primary-hover: #7c3aed;
       --primary-soft: rgba(139, 92, 246, 0.15);
-      --accent: #a855f7;
       --text: #f9fafb;
       --text-muted: #94a3b8;
       --radius: 14px;
@@ -29,12 +28,12 @@
       min-height: 100vh;
     }
 
-    /* Modal de Senha / Login */
+    /* Modal de Senha */
     #auth-overlay {
       position: fixed;
       inset: 0;
       background: rgba(11, 10, 16, 0.94);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -61,7 +60,6 @@
       gap: 28px;
     }
 
-    /* Header */
     header {
       display: flex;
       align-items: center;
@@ -69,11 +67,7 @@
       border-bottom: 1px solid var(--card-border);
       padding-bottom: 18px;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .brand { display: flex; align-items: center; gap: 12px; }
     .brand-icon {
       width: 44px;
       height: 44px;
@@ -96,23 +90,16 @@
       border-radius: 8px;
       cursor: pointer;
       font-size: 0.8rem;
-      transition: all 0.2s;
     }
-    .btn-logout:hover {
-      border-color: #ef4444;
-      color: #ef4444;
-    }
+    .btn-logout:hover { border-color: #ef4444; color: #ef4444; }
 
-    /* Grid Layout */
     .grid {
       display: grid;
       grid-template-columns: 380px 1fr;
       gap: 24px;
       align-items: start;
     }
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--card-bg);
@@ -120,14 +107,7 @@
       border-radius: var(--radius);
       padding: 24px;
     }
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; }
 
     .form-group {
       display: flex;
@@ -145,12 +125,8 @@
       font-size: 0.9rem;
       font-family: inherit;
       outline: none;
-      transition: all 0.2s;
     }
-    input:focus, select:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px var(--primary-soft);
-    }
+    input:focus, select:focus { border-color: var(--primary); }
 
     button.btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-hover));
@@ -162,23 +138,16 @@
       font-weight: 600;
       cursor: pointer;
       width: 100%;
-      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
-      transition: all 0.2s;
     }
-    button.btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
 
-    /* Filtros */
     .filter-bar {
       display: grid;
       grid-template-columns: 1fr auto auto;
       gap: 12px;
       margin-bottom: 18px;
     }
-    @media (max-width: 600px) {
-      .filter-bar { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 600px) { .filter-bar { grid-template-columns: 1fr; } }
 
-    /* Tabela */
     .table-container { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
     th {
@@ -188,14 +157,12 @@
       border-bottom: 1px solid var(--card-border);
       font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
     td {
       padding: 14px 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       vertical-align: middle;
     }
-    tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
     .badge {
       display: inline-block;
@@ -216,14 +183,8 @@
       border-radius: 6px;
       font-size: 0.75rem;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
       text-decoration: none;
-    }
-    .btn-action:hover {
-      background: var(--primary-soft);
-      border-color: var(--primary);
+      display: inline-block;
     }
 
     #toast {
@@ -244,14 +205,14 @@
 </head>
 <body>
 
-  <!-- Tela de Login / Senha de Acesso -->
+  <!-- Modal de Senha -->
   <div id="auth-overlay">
     <div class="auth-box">
       <div class="brand-icon" style="margin: 0 auto 16px auto;">
         <svg viewBox="0 0 24 24"><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
       </div>
       <h2 style="font-size: 1.2rem; margin-bottom: 6px;">Tap NF Admin</h2>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;">Digite sua Senha</p>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;">Digite a senha de administrador</p>
       
       <form id="authForm">
         <input type="password" id="adminPassword" placeholder="Sua senha..." style="width: 100%; margin-bottom: 12px; text-align: center;" required autofocus>
@@ -260,7 +221,6 @@
     </div>
   </div>
 
-  <!-- Painel Administrativo -->
   <div class="container">
     <header>
       <div class="brand">
@@ -276,7 +236,6 @@
     </header>
 
     <div class="grid">
-      <!-- Formulário -->
       <div class="card">
         <h2 class="card-title">Nova Tag NFC</h2>
         <form id="tagForm">
@@ -311,18 +270,10 @@
             <label>Bairro (Nova Friburgo)</label>
             <input list="bairrosList" id="bairro" placeholder="Selecione ou digite o bairro">
             <datalist id="bairrosList">
-              <option value="Centro">
-              <option value="Olaria">
-              <option value="Cônego">
-              <option value="Braunes">
-              <option value="Cascata">
-              <option value="Conselheiro Paulino">
-              <option value="Duas Pedras">
-              <option value="Ponte da Saudade">
-              <option value="Mury">
-              <option value="Amparo">
-              <option value="Lumiar">
-              <option value="São Pedro da Serra">
+              <option value="Centro"><option value="Olaria"><option value="Cônego">
+              <option value="Braunes"><option value="Cascata"><option value="Conselheiro Paulino">
+              <option value="Duas Pedras"><option value="Ponte da Saudade"><option value="Mury">
+              <option value="Amparo"><option value="Lumiar"><option value="São Pedro da Serra">
             </datalist>
           </div>
 
@@ -335,12 +286,11 @@
         </form>
       </div>
 
-      <!-- Tabela -->
       <div class="card">
         <h2 class="card-title">Tags Ativas</h2>
         
         <div class="filter-bar">
-          <input type="text" id="searchInput" placeholder="Buscar cliente ou ID..." oninput="filterTags()">
+          <input type="text" id="searchInput" placeholder="Buscar por cliente ou ID..." oninput="filterTags()">
           <select id="filterTipo" onchange="filterTags()">
             <option value="">Todos os Tipos</option>
             <option value="Google">Google</option>
@@ -374,36 +324,24 @@
   <div id="toast"></div>
 
   <script>
-    // ⚠️ CONFIGURAÇÕES:
-    const API_URL = "https://script.google.com/macros/s/SEU_SCRIPT_ID_AQUI/exec";
-    const SENHA_MESTRA = "TapNF1802"; // <-- Modifique para a sua senha desejada!
+    // ⚠️ SUA URL REAL DO APPS SCRIPT JÁ CONFIGURADA:
+    const API_URL = "https://script.google.com/macros/s/AKfycbwz13ls9Ssqi3tWon1kkWh3SGTmvPvvYbBw-vp7fUJU-7HE0E979ZGPD9OivyHeuZu8/exec";
+    const SENHA_MESTRA = "tapnf2026"; // <-- Modifique se quiser!
 
-    // ==========================================
-    // 1. SOLUÇÃO DO BUG DA URL: Corta o "admin"
-    // ==========================================
+    // Corta o 'admin' e aponta para o index.html da raiz
     function getCleanBaseUrl() {
-      // Pega a URL atual sem os parâmetros (?...) e sem hashtags (#...)
-      let current = window.location.href.split('?')[0].split('#')[0];
-      
-      // Remove 'admin.html', 'admin/', ou 'admin' do final
-      let clean = current.replace(/\/admin(\.html)?\/?$/i, '');
-      
-      // Garante que termine com barra (ex: https://tapnf.com.br/ ou https://site.pages.dev/)
-      if (!clean.endsWith('/')) {
-        clean += '/';
-      }
+      let loc = window.location.href.split('?')[0].split('#')[0];
+      let clean = loc.replace(/\/admin(\.html)?\/?$/i, '');
+      if (!clean.endsWith('/')) clean += '/';
       return clean;
     }
 
     const BASE_URL = getCleanBaseUrl();
     let cachedTags = [];
 
-    // ==========================================
-    // 2. SISTEMA DE AUTENTICAÇÃO COM SENHA
-    // ==========================================
+    // Gerenciador de Senha
     window.addEventListener('DOMContentLoaded', () => {
-      const isAuth = sessionStorage.getItem('tapnf_logged');
-      if (isAuth === 'true') {
+      if (sessionStorage.getItem('tapnf_auth') === 'true') {
         document.getElementById('auth-overlay').style.display = 'none';
         fetchTags();
       }
@@ -414,7 +352,7 @@
       e.preventDefault();
       const pass = document.getElementById('adminPassword').value;
       if (pass === SENHA_MESTRA) {
-        sessionStorage.setItem('tapnf_logged', 'true');
+        sessionStorage.setItem('tapnf_auth', 'true');
         document.getElementById('auth-overlay').style.display = 'none';
         fetchTags();
       } else {
@@ -424,26 +362,29 @@
     });
 
     function logout() {
-      sessionStorage.removeItem('tapnf_logged');
+      sessionStorage.removeItem('tapnf_auth');
       location.reload();
     }
 
-    // ==========================================
-    // 3. COMUNICAÇÃO COM O APPS SCRIPT
-    // ==========================================
+    // Leitura das tags na planilha
     async function fetchTags() {
       try {
         const res = await fetch(`${API_URL}?action=getAll`, {
           method: 'GET',
           redirect: 'follow'
         });
-        const data = await res.json();
+        const text = await res.text();
+        const data = JSON.parse(text);
+
         if (data.success) {
           cachedTags = data.tags || [];
           populateBairrosFilter(cachedTags);
           renderTable(cachedTags);
+        } else {
+          showToast(data.message || "Erro retornado pela planilha.");
         }
       } catch (err) {
+        console.error("Erro fetchTags:", err);
         showToast("Erro ao carregar dados da planilha.");
       }
     }
@@ -459,12 +400,10 @@
 
       tags.forEach(t => {
         const tr = document.createElement('tr');
-        
         let badgeClass = 'badge-google';
         if (t.tipo.includes('Instagram')) badgeClass = 'badge-insta';
         if (t.tipo.includes('WhatsApp')) badgeClass = 'badge-whats';
 
-        // GERAÇÃO DO LINK LIMPO SEM "admin.html"
         const finalNfcLink = `${BASE_URL}?id=${encodeURIComponent(t.id)}`;
 
         tr.innerHTML = `
@@ -483,7 +422,7 @@
       });
     }
 
-    // Gerador de Slug inteligente
+    // Gerador de Slug
     const clienteInput = document.getElementById('cliente');
     const tipoSelect = document.getElementById('tipo');
     const idTagInput = document.getElementById('idTag');
@@ -514,24 +453,24 @@
       const input = document.getElementById('destino');
       
       if (tipo === 'Google Avaliações') {
-        label.textContent = "Link de Avaliação Google (ex: link curto 5 estrelas)";
+        label.textContent = "Link de Avaliação Google Maps";
         input.placeholder = "https://g.page/r/...";
       } else if (tipo === 'Instagram') {
-        label.textContent = "Nome de usuário do Instagram (@)";
-        input.placeholder = "@padariapoppe ou link do perfil";
+        label.textContent = "Instagram (@ ou link)";
+        input.placeholder = "@padariapoppe";
       } else {
-        label.textContent = "Número do WhatsApp com DDD";
+        label.textContent = "WhatsApp (DDD + Número)";
         input.placeholder = "22999998888";
       }
       updateSlug();
     }
 
-    // Salvar Tag
+    // Gravação da nova Tag
     document.getElementById('tagForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btnSubmit');
       btn.disabled = true;
-      btn.textContent = "Salvando na planilha...";
+      btn.textContent = "Salvando...";
 
       const payload = {
         id: idTagInput.value,
@@ -567,7 +506,6 @@
       }
     });
 
-    // Filtros
     function filterTags() {
       const search = document.getElementById('searchInput').value.toLowerCase();
       const tipo = document.getElementById('filterTipo').value;
