@@ -604,4 +604,35 @@
       const bairro = document.getElementById('filterBairro').value;
 
       const filtered = cachedTags.filter(t => {
-        const matchesSearch = (t.cliente || '').toLowerCase().includes(search) || (t.id || '').toLo
+        const matchesSearch = (t.cliente || '').toLowerCase().includes(search) || (t.id || '').toLowerCase().includes(search);
+        const matchesTipo = !tipo || (t.tipo || '').includes(tipo);
+        const matchesBairro = !bairro || (t.bairro || '') === bairro;
+        return matchesSearch && matchesTipo && matchesBairro;
+      });
+
+      renderTable(filtered);
+    }
+
+    function populateBairrosFilter(tags) {
+      const select = document.getElementById('filterBairro');
+      const bairros = [...new Set(tags.map(t => t.bairro).filter(Boolean))];
+      select.innerHTML = '<option value="">Todos os Bairros</option>';
+      bairros.forEach(b => {
+        select.innerHTML += `<option value="${b}">${b}</option>`;
+      });
+    }
+
+    function copyNfcLink(url) {
+      navigator.clipboard.writeText(url);
+      showToast("Link NFC copiado!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+  </script>
+</body>
+</html>
