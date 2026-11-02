@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tap NF | Painel de Controle</title>
+  <title>Tap NF | Painel do Ecossistema</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0a10;
-      --card-bg: #14121f;
-      --card-border: #232035;
-      --primary: #8b5cf6;
-      --primary-hover: #7c3aed;
-      --primary-soft: rgba(139, 92, 246, 0.15);
+      --bg: #090810;
+      --card-bg: #13111f;
+      --card-border: #242038;
+      --primary: #9333ea;
+      --primary-hover: #7e22ce;
+      --primary-soft: rgba(147, 51, 234, 0.15);
+      --accent: #c084fc;
       --text: #f9fafb;
-      --text-muted: #94a3b8;
+      --text-muted: #9ca3af;
       --danger: #ef4444;
-      --danger-soft: rgba(239, 68, 68, 0.15);
       --radius: 14px;
     }
 
@@ -34,7 +34,7 @@
     #auth-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(11, 10, 16, 0.94);
+      background: rgba(9, 8, 16, 0.95);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -51,11 +51,11 @@
       width: 100%;
       max-width: 360px;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.7);
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1160px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -71,16 +71,16 @@
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .brand-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #7c3aed, #4c1d95);
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #9333ea, #581c87);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 25px rgba(147, 51, 234, 0.45);
     }
-    .brand-icon svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2.2; }
+    .brand-icon svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2.2; }
     .brand-text h1 { font-size: 1.35rem; font-weight: 700; }
     .brand-text p { font-size: 0.8rem; color: var(--text-muted); }
 
@@ -97,11 +97,11 @@
 
     .grid {
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 400px 1fr;
       gap: 24px;
       align-items: start;
     }
-    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--card-bg);
@@ -109,17 +109,17 @@
       border-radius: var(--radius);
       padding: 24px;
     }
-    .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; }
+    .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; }
 
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-bottom: 16px;
+      margin-bottom: 15px;
     }
     label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
     input, select {
-      background: #0f0d18;
+      background: #0c0b14;
       border: 1px solid var(--card-border);
       color: #fff;
       padding: 12px 14px;
@@ -129,6 +129,8 @@
       outline: none;
     }
     input:focus, select:focus { border-color: var(--primary); }
+    optgroup { background: #13111f; color: var(--accent); font-weight: 700; }
+    option { background: #0c0b14; color: #fff; font-weight: normal; }
 
     button.btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-hover));
@@ -140,15 +142,18 @@
       font-weight: 600;
       cursor: pointer;
       width: 100%;
+      margin-top: 6px;
     }
 
+    /* Barra de Filtros e Ordenação */
     .filter-bar {
       display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 12px;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 10px;
       margin-bottom: 18px;
     }
-    @media (max-width: 600px) { .filter-bar { grid-template-columns: 1fr; } }
+    @media (max-width: 760px) { .filter-bar { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .filter-bar { grid-template-columns: 1fr; } }
 
     .table-container { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
@@ -157,54 +162,43 @@
       font-weight: 600;
       padding: 12px 10px;
       border-bottom: 1px solid var(--card-border);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
     }
     td {
-      padding: 14px 10px;
+      padding: 13px 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       vertical-align: middle;
     }
 
+    /* Badges dos Ecossistemas */
     .badge {
       display: inline-block;
-      padding: 4px 9px;
+      padding: 4px 8px;
       border-radius: 6px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
+      white-space: nowrap;
     }
-    .badge-google { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-    .badge-insta { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
-    .badge-whats { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-business { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-moments  { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+    .badge-home     { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-personal { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
 
-    /* Botões de Ações */
     .actions-cell {
       display: flex;
       align-items: center;
       gap: 6px;
-      flex-wrap: nowrap;
     }
-
     .btn-action {
-      background: #1a1727;
+      background: #191629;
       border: 1px solid var(--card-border);
       color: #c4b5fd;
       padding: 6px 10px;
       border-radius: 6px;
       font-size: 0.75rem;
       cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.2s;
     }
-    .btn-action:hover {
-      background: var(--primary-soft);
-      border-color: var(--primary);
-    }
-
-    /* Botão Lixeira */
     .btn-delete {
       background: rgba(239, 68, 68, 0.08);
       border: 1px solid rgba(239, 68, 68, 0.2);
@@ -214,31 +208,19 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
     }
-    .btn-delete:hover {
-      background: var(--danger);
-      color: #fff;
-    }
-    .btn-delete svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-    }
+    .btn-delete:hover { background: var(--danger); color: #fff; }
+    .btn-delete svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
 
     #toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #1a172a;
+      background: #171526;
       border: 1px solid var(--primary);
       color: #fff;
       padding: 12px 20px;
       border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       font-size: 0.9rem;
       display: none;
       z-index: 1001;
@@ -253,8 +235,8 @@
       <div class="brand-icon" style="margin: 0 auto 16px auto;">
         <svg viewBox="0 0 24 24"><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
       </div>
-      <h2 style="font-size: 1.2rem; margin-bottom: 6px;">Tap NF Admin</h2>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;">Digite a senha de administrador</p>
+      <h2 style="font-size: 1.2rem; margin-bottom: 6px;">Tap NF Ecossistema</h2>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;">Digite a senha mestra de administrador</p>
       
       <form id="authForm">
         <input type="password" id="adminPassword" placeholder="Sua senha..." style="width: 100%; margin-bottom: 12px; text-align: center;" required autofocus>
@@ -271,27 +253,52 @@
         </div>
         <div class="brand-text">
           <h1>Tap NF</h1>
-          <p>Painel de Controle • Nova Friburgo - RJ</p>
+          <p>Painel Geral de Tags • Nova Friburgo - RJ</p>
         </div>
       </div>
       <button class="btn-logout" onclick="logout()">Encerrar Sessão</button>
     </header>
 
     <div class="grid">
+      <!-- Formulário -->
       <div class="card">
-        <h2 class="card-title">Nova Tag NFC</h2>
+        <h2 class="card-title">Cadastrar Nova Tag NFC</h2>
         <form id="tagForm">
           <div class="form-group">
-            <label>Nome do Estabelecimento / Cliente</label>
-            <input type="text" id="cliente" placeholder="Ex: Padaria Poppe" required>
+            <label>Identificação / Nome (Cliente ou Evento)</label>
+            <input type="text" id="cliente" placeholder="Ex: Padaria Poppe ou Casamento Léo & Mari" required>
           </div>
 
           <div class="form-group">
-            <label>Tipo de Pilar</label>
+            <label>Pilar / Aplicação NFC</label>
             <select id="tipo" required onchange="adjustDestinationHelper()">
-              <option value="Google Avaliações">Google Avaliações (5 Estrelas)</option>
-              <option value="Instagram">Instagram</option>
-              <option value="WhatsApp">WhatsApp</option>
+              <optgroup label="🏢 TAP BUSINESS">
+                <option value="Google Avaliações">Google Avaliações (5 Estrelas)</option>
+                <option value="Instagram">Instagram da Empresa</option>
+                <option value="WhatsApp">WhatsApp Direto</option>
+                <option value="Cardápio Digital">Cardápio Digital / iFood / PDF</option>
+                <option value="Wi-Fi Clientes">Compartilhamento de Wi-Fi</option>
+                <option value="Cartão Digital">Cartão de Visita Comercial</option>
+              </optgroup>
+
+              <optgroup label="💖 TAP MOMENTS">
+                <option value="Álbum de Fotos">Álbum Digital (Fotos / Vídeos / Drive)</option>
+                <option value="Casamento / Festas">Lembrança de Casamento ou Evento</option>
+                <option value="Página de Recordações">Página de Recordações / Vídeo Homenagem</option>
+              </optgroup>
+
+              <optgroup label="🏡 TAP HOME">
+                <option value="Wi-Fi de Visitas">Wi-Fi de Visitas Residencial</option>
+                <option value="Playlist / Música">Acesso Rápido a Playlist (Spotify)</option>
+                <option value="Automações / Atalhos">Atalho / Rotina de Casa Inteligente</option>
+                <option value="Organização / Plantas">Etiquetas de Objetos e Plantas</option>
+              </optgroup>
+
+              <optgroup label="👤 TAP PERSONAL">
+                <option value="Chaveiro Personal">Chaveiro NFC Personalizado</option>
+                <option value="Cartão Pessoal">Cartão de Visita Pessoal / Linktree</option>
+                <option value="Redes Sociais">Hub de Redes Sociais</option>
+              </optgroup>
             </select>
           </div>
 
@@ -302,15 +309,15 @@
 
           <div class="form-group">
             <label>ID da URL (NFC Slug)</label>
-            <input type="text" id="idTag" placeholder="ex: poppe-google" required>
+            <input type="text" id="idTag" placeholder="ex: poppe-g" required>
             <small style="color: var(--text-muted); font-size: 0.72rem; margin-top: 3px;">
               Link gravado na tag: <b id="previewFullUrl">...</b>
             </small>
           </div>
 
           <div class="form-group">
-            <label>Bairro (Nova Friburgo)</label>
-            <input list="bairrosList" id="bairro" placeholder="Selecione ou digite o bairro">
+            <label>Bairro / Localidade (Nova Friburgo)</label>
+            <input list="bairrosList" id="bairro" placeholder="Selecione ou digite">
             <datalist id="bairrosList">
               <option value="Centro"><option value="Olaria"><option value="Cônego">
               <option value="Braunes"><option value="Cascata"><option value="Conselheiro Paulino">
@@ -328,17 +335,32 @@
         </form>
       </div>
 
+      <!-- Tabela com Filtros -->
       <div class="card">
-        <h2 class="card-title">Tags Ativas</h2>
+        <h2 class="card-title">
+          Tags Cadastradas
+          <span id="tagCount" style="font-size: 0.8rem; color: var(--accent); font-weight: normal;">0 tags</span>
+        </h2>
         
         <div class="filter-bar">
           <input type="text" id="searchInput" placeholder="Buscar cliente ou ID..." oninput="filterTags()">
-          <select id="filterTipo" onchange="filterTags()">
-            <option value="">Todos os Tipos</option>
-            <option value="Google">Google</option>
-            <option value="Instagram">Instagram</option>
-            <option value="WhatsApp">WhatsApp</option>
+          
+          <!-- ORDENAÇÃO ALFABÉTICA / MAIS RECENTES -->
+          <select id="sortOrder" onchange="filterTags()">
+            <option value="default">Ordem: Mais Recentes</option>
+            <option value="asc">Nome: A → Z (Alfabética)</option>
+            <option value="desc">Nome: Z → A</option>
           </select>
+
+          <!-- FILTRO POR ECOSSISTEMA -->
+          <select id="filterEcossistema" onchange="filterTags()">
+            <option value="">Todos os Ecossistemas</option>
+            <option value="business">Tap Business</option>
+            <option value="moments">Tap Moments</option>
+            <option value="home">Tap Home</option>
+            <option value="personal">Tap Personal</option>
+          </select>
+
           <select id="filterBairro" onchange="filterTags()">
             <option value="">Todos os Bairros</option>
           </select>
@@ -349,7 +371,7 @@
             <thead>
               <tr>
                 <th>Cliente / ID</th>
-                <th>Pilar</th>
+                <th>Pilar & Linha</th>
                 <th>Bairro</th>
                 <th>Ações</th>
               </tr>
@@ -379,7 +401,6 @@
     const BASE_URL = getCleanBaseUrl();
     let cachedTags = [];
 
-    // Gerenciador de Senha
     window.addEventListener('DOMContentLoaded', () => {
       if (sessionStorage.getItem('tapnf_auth') === 'true') {
         document.getElementById('auth-overlay').style.display = 'none';
@@ -406,7 +427,6 @@
       location.reload();
     }
 
-    // Leitura das tags
     async function fetchTags() {
       try {
         const res = await fetch(`${API_URL}?action=getAll`, {
@@ -419,7 +439,7 @@
         if (data.success) {
           cachedTags = data.tags || [];
           populateBairrosFilter(cachedTags);
-          renderTable(cachedTags);
+          filterTags();
         } else {
           showToast(data.message || "Erro retornado pela planilha.");
         }
@@ -428,21 +448,27 @@
       }
     }
 
+    function getCategoryClass(tipo) {
+      tipo = (tipo || '').toLowerCase();
+      if (tipo.includes('álbum') || tipo.includes('fotos') || tipo.includes('casamento') || tipo.includes('recordaç')) return { class: 'badge-moments', label: 'Moments' };
+      if (tipo.includes('visitas') || tipo.includes('playlist') || tipo.includes('automaç') || tipo.includes('organizaç')) return { class: 'badge-home', label: 'Home' };
+      if (tipo.includes('chaveiro') || tipo.includes('pessoal')) return { class: 'badge-personal', label: 'Personal' };
+      return { class: 'badge-business', label: 'Business' };
+    }
+
     function renderTable(tags) {
       const tbody = document.getElementById('tagsBody');
+      document.getElementById('tagCount').textContent = `${tags.length} tag${tags.length !== 1 ? 's' : ''}`;
       tbody.innerHTML = '';
 
       if (!tags.length) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Nenhuma tag encontrada.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">Nenhuma tag encontrada com esses filtros.</td></tr>`;
         return;
       }
 
       tags.forEach(t => {
         const tr = document.createElement('tr');
-        let badgeClass = 'badge-google';
-        if (t.tipo.includes('Instagram')) badgeClass = 'badge-insta';
-        if (t.tipo.includes('WhatsApp')) badgeClass = 'badge-whats';
-
+        const catInfo = getCategoryClass(t.tipo);
         const finalNfcLink = `${BASE_URL}?id=${encodeURIComponent(t.id)}`;
 
         tr.innerHTML = `
@@ -450,11 +476,14 @@
             <strong>${t.cliente || 'Sem nome'}</strong><br>
             <code style="color: var(--primary); font-size: 0.75rem;">${t.id}</code>
           </td>
-          <td><span class="badge ${badgeClass}">${t.tipo}</span></td>
+          <td>
+            <span class="badge ${catInfo.class}">${catInfo.label}</span>
+            <div style="font-size: 0.78rem; color: #d1d5db; margin-top: 3px;">${t.tipo}</div>
+          </td>
           <td><small style="color: var(--text-muted);">${t.bairro || 'N/A'}</small></td>
           <td>
             <div class="actions-cell">
-              <button class="btn-action" onclick="copyNfcLink('${finalNfcLink}')">Copiar</button>
+              <button class="btn-action" onclick="copyNfcLink('${finalNfcLink}')">Copiar Link</button>
               <button class="btn-delete" title="Excluir cliente" onclick="deleteTag('${t.id}', '${escapeHtml(t.cliente)}')">
                 <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
               </button>
@@ -466,29 +495,37 @@
     }
 
     // ==========================================
-    // SOLUÇÃO DO WEBVIEW DO WEBINTOPAPP (.APK)
+    // FILTROS + ORDENAÇÃO ALFABÉTICA (A-Z)
     // ==========================================
-    function testNfcLink(url) {
-      const isAndroid = /Android/i.test(navigator.userAgent);
-      if (isAndroid) {
-        // Dispara intent nativo para forçar a saída do WebView e abrir no Chrome
-        const raw = url.replace(/^https?:\/\//, '');
-        window.location.href = `intent://${raw}#Intent;scheme=https;action=android.intent.action.VIEW;end`;
-      } else {
-        window.open(url, '_blank');
+    function filterTags() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const ecossistema = document.getElementById('filterEcossistema').value;
+      const bairro = document.getElementById('filterBairro').value;
+      const sort = document.getElementById('sortOrder').value;
+
+      let filtered = cachedTags.filter(t => {
+        const matchesSearch = (t.cliente || '').toLowerCase().includes(search) || (t.id || '').toLowerCase().includes(search);
+        const cat = getCategoryClass(t.tipo).label.toLowerCase();
+        const matchesEco = !ecossistema || cat === ecossistema;
+        const matchesBairro = !bairro || (t.bairro || '') === bairro;
+        return matchesSearch && matchesEco && matchesBairro;
+      });
+
+      // Ordenação Alfabética A-Z / Z-A
+      if (sort === 'asc') {
+        filtered.sort((a, b) => (a.cliente || '').localeCompare(b.cliente || '', 'pt-BR', { sensitivity: 'base' }));
+      } else if (sort === 'desc') {
+        filtered.sort((a, b) => (b.cliente || '').localeCompare(a.cliente || '', 'pt-BR', { sensitivity: 'base' }));
       }
+
+      renderTable(filtered);
     }
 
-    // ==========================================
-    // FUNÇÃO DE EXCLUSÃO COM A LIXEIRINHA
-    // ==========================================
     async function deleteTag(id, cliente) {
       if (!confirm(`Deseja realmente excluir a tag de "${cliente}" (${id})?\n\nEsta ação apagará a linha da sua planilha do Google.`)) {
         return;
       }
-
       showToast("Excluindo da planilha...");
-
       try {
         const res = await fetch(API_URL, {
           method: 'POST',
@@ -497,15 +534,14 @@
           body: JSON.stringify({ action: 'delete', id: id })
         });
         const result = await res.json();
-
         if (result.success) {
           showToast("Cliente excluído com sucesso!");
-          fetchTags(); // Atualiza a tabela
+          fetchTags();
         } else {
           showToast(result.message || "Erro ao excluir.");
         }
       } catch (err) {
-        showToast("Erro ao comunicar exclusão com a planilha.");
+        showToast("Erro ao comunicar exclusão.");
       }
     }
 
@@ -513,7 +549,7 @@
       return (text || '').replace(/'/g, "\\'");
     }
 
-    // Slug Generator
+    // Slug Generator Inteligente
     const clienteInput = document.getElementById('cliente');
     const tipoSelect = document.getElementById('tipo');
     const idTagInput = document.getElementById('idTag');
@@ -526,9 +562,19 @@
 
     function updateSlug() {
       const clientSlug = clienteInput.value.toLowerCase().replace(/[^a-z0-9]/g, '');
-      let suffix = 'g';
-      if (tipoSelect.value.includes('Instagram')) suffix = 'insta';
-      if (tipoSelect.value.includes('WhatsApp')) suffix = 'zap';
+      const tipo = tipoSelect.value;
+      let suffix = 'tag';
+
+      if (tipo.includes('Google')) suffix = 'g';
+      else if (tipo.includes('Instagram')) suffix = 'insta';
+      else if (tipo.includes('WhatsApp')) suffix = 'zap';
+      else if (tipo.includes('Cardápio')) suffix = 'menu';
+      else if (tipo.includes('Wi-Fi')) suffix = 'wifi';
+      else if (tipo.includes('Álbum') || tipo.includes('Fotos')) suffix = 'fotos';
+      else if (tipo.includes('Casamento')) suffix = 'evento';
+      else if (tipo.includes('Playlist')) suffix = 'musica';
+      else if (tipo.includes('Chaveiro')) suffix = 'key';
+
       if (clientSlug) {
         idTagInput.value = `${clientSlug}-${suffix}`;
       }
@@ -538,6 +584,7 @@
     clienteInput.addEventListener('input', updateSlug);
     idTagInput.addEventListener('input', updatePreview);
 
+    // Ajusta o placeholder conforme o que você escolher
     function adjustDestinationHelper() {
       const tipo = tipoSelect.value;
       const label = document.getElementById('destLabel');
@@ -546,12 +593,24 @@
       if (tipo === 'Google Avaliações') {
         label.textContent = "Link de Avaliação Google Maps";
         input.placeholder = "https://g.page/r/...";
-      } else if (tipo === 'Instagram') {
+      } else if (tipo.includes('Instagram')) {
         label.textContent = "Instagram (@ ou perfil)";
-        input.placeholder = "@padariapoppe";
-      } else {
+        input.placeholder = "@usuario ou https://instagram.com/...";
+      } else if (tipo.includes('WhatsApp')) {
         label.textContent = "WhatsApp (DDD + Número)";
         input.placeholder = "22999998888";
+      } else if (tipo.includes('Álbum') || tipo.includes('Fotos') || tipo.includes('Casamento') || tipo.includes('Recordaç')) {
+        label.textContent = "Link do Álbum ou Vídeo (Google Fotos, Drive, YouTube)";
+        input.placeholder = "https://photos.app.goo.gl/... ou link do Drive";
+      } else if (tipo.includes('Playlist')) {
+        label.textContent = "Link da Playlist (Spotify, Apple Music)";
+        input.placeholder = "https://open.spotify.com/playlist/...";
+      } else if (tipo.includes('Cardápio')) {
+        label.textContent = "Link do Cardápio (PDF, iFood, InstaLink)";
+        input.placeholder = "https://meucardapio.com/...";
+      } else {
+        label.textContent = "Link de Destino / Ação";
+        input.placeholder = "https://...";
       }
       updateSlug();
     }
@@ -596,21 +655,6 @@
         btn.textContent = "Cadastrar Tag";
       }
     });
-
-    function filterTags() {
-      const search = document.getElementById('searchInput').value.toLowerCase();
-      const tipo = document.getElementById('filterTipo').value;
-      const bairro = document.getElementById('filterBairro').value;
-
-      const filtered = cachedTags.filter(t => {
-        const matchesSearch = (t.cliente || '').toLowerCase().includes(search) || (t.id || '').toLowerCase().includes(search);
-        const matchesTipo = !tipo || (t.tipo || '').includes(tipo);
-        const matchesBairro = !bairro || (t.bairro || '') === bairro;
-        return matchesSearch && matchesTipo && matchesBairro;
-      });
-
-      renderTable(filtered);
-    }
 
     function populateBairrosFilter(tags) {
       const select = document.getElementById('filterBairro');
